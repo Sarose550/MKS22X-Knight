@@ -27,11 +27,12 @@ public String toString(){
 				result += "_";
 			}
 			else{
-				result += board[i][j].toString();
+				result += Integer.toString(board[i][j]);
 			}
 		}
 		result += "\n";
 	}
+	return result;
 } 
 /*see format for toString below
 blank boards display 0's as underscores 
@@ -51,17 +52,41 @@ public boolean solve(int startingRow, int startingCol){
 			}
 		}
 	}
-	this.solveH(startingRow, startingCol, 0);
+	board[startingRow][startingCol] = 1;
+	return this.solveH(startingRow, startingCol, 0);
 }
 
 /*@throws IllegalStateException when the board contains non-zero values. 
 @throws IllegalArgumentException when either parameter is negative 
  or out of bounds.*/
-public int countSolutions(int startingRow, int startingCol)
+//public int countSolutions(int startingRow, int startingCol)
 
 //Suggestion:
 private boolean solveH(int row ,int col, int level){
-	
+	if(level == startingRows * startingCols) return true;
+	for(int i = -2; i <= 2; i += 4){
+		for(int j = -1; j <= 1; j += 2){
+			if(row + i >= 0 && row + i < startingRows){
+				if(col+ j >= 0 && col + j < startingCols){
+					if(board[row + i][col + j] == 0){
+						board[row + i][col + j] = level + 1;
+						if(this.solveH(row + i, col + j, level + 1)) return true;
+						board[row + i][row + j] = 0;
+					}
+				}
+			}
+			if(row + j >= 0 && row + j < startingRows){
+				if(col + i >= 0 && col + i < startingCols){
+					if(board[row + j][col + i] == 0){
+						board[row + j][col + i] = level + 1;
+						if(this.solveH(row + i, col + j, level + 1)) return true;
+						board[row + i][row + j] = 0;
+					}
+				}
+			}
+		}
+	}
+	return false;
 }
 // level is the # of the knight
 }
