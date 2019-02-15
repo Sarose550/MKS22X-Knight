@@ -53,7 +53,7 @@ public boolean solve(int startingRow, int startingCol){
 		}
 	}
 	board[startingRow][startingCol] = 1;
-	return this.solveH(startingRow, startingCol, 0);
+	return this.solveH(startingRow, startingCol, 1);
 }
 
 /*@throws IllegalStateException when the board contains non-zero values. 
@@ -68,7 +68,7 @@ private boolean solveH(int row, int col, int level){
 		for(int j = -1; j <= 1; j += 2){
 			if(row + i >= 0 && row + i < startingRows){
 				if(col+ j >= 0 && col + j < startingCols){
-					System.out.println((row + i) + ", " + (col + j) + ", " + level + "\n");
+					System.out.println((row + i) + ", " + (col + j) + ", " + level + "\n" + this);
 					if(board[row + i][col + j] == 0){
 						board[row + i][col + j] = level + 1;
 						if(this.solveH(row + i, col + j, level + 1)) return true;
@@ -78,7 +78,7 @@ private boolean solveH(int row, int col, int level){
 			}
 			if(row + j >= 0 && row + j < startingRows){
 				if(col + i >= 0 && col + i < startingCols){
-					System.out.println((row + j) + ", " + (col + i) + ", " + level + "\n");
+					System.out.println((row + j) + ", " + (col + i) + ", " + level + "\n" + this);
 					if(board[row + j][col + i] == 0){
 						board[row + j][col + i] = level + 1;
 						if(this.solveH(row + j, col + i, level + 1)) return true;
