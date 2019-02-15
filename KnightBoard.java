@@ -62,12 +62,13 @@ public boolean solve(int startingRow, int startingCol){
 //public int countSolutions(int startingRow, int startingCol)
 
 //Suggestion:
-private boolean solveH(int row ,int col, int level){
+private boolean solveH(int row, int col, int level){
 	if(level == startingRows * startingCols) return true;
 	for(int i = -2; i <= 2; i += 4){
 		for(int j = -1; j <= 1; j += 2){
 			if(row + i >= 0 && row + i < startingRows){
 				if(col+ j >= 0 && col + j < startingCols){
+					System.out.println((row + i) + ", " + (col + j) + ", " + level + "\n");
 					if(board[row + i][col + j] == 0){
 						board[row + i][col + j] = level + 1;
 						if(this.solveH(row + i, col + j, level + 1)) return true;
@@ -77,15 +78,17 @@ private boolean solveH(int row ,int col, int level){
 			}
 			if(row + j >= 0 && row + j < startingRows){
 				if(col + i >= 0 && col + i < startingCols){
+					System.out.println((row + j) + ", " + (col + i) + ", " + level + "\n");
 					if(board[row + j][col + i] == 0){
 						board[row + j][col + i] = level + 1;
-						if(this.solveH(row + i, col + j, level + 1)) return true;
-						board[row + i][row + j] = 0;
+						if(this.solveH(row + j, col + i, level + 1)) return true;
+						board[row + j][col + i] = 0;
 					}
 				}
 			}
 		}
 	}
+	System.out.println("False\n");
 	return false;
 }
 // level is the # of the knight
