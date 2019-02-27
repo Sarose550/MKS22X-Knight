@@ -19,17 +19,13 @@ public KnightBoard(int startingRows,int startingCols){
 
 public String toString(){
 	String result = "";
+	int maxdigs = digs(startingRows * startingCols);
 	for(int i = 0; i < startingRows; i++){
 		for(int j = 0; j < startingCols; j++){
-			if(startingRows * startingCols >= 10 && board[i][j] < 10){
-				result += "  ";
-			}
-			else{
+			for(int k = digs(board[i][j]); k <= maxdigs; k++){
 				result += " ";
 			}
-			if(board[i][j] == 0){
-				result += "_";
-			}
+			if(board[i][j] == 0) result += "_";
 			else{
 				result += Integer.toString(board[i][j]);
 			}
@@ -88,6 +84,17 @@ public boolean solve(int startingRow, int startingCol){
 	if(this.solveH(startingRow, startingCol, 1, moves)) return true;
 	board[startingRow][startingCol] = 0;
 	return false;
+}
+
+public int digs(int n){
+	if(n == 0) return 0;
+	int result = 0;
+	int k = n;
+	while(k > 0){
+		k /= 10;
+		result += 1;
+	}
+	return result;
 }
 
 /*@throws IllegalStateException when the board contains non-zero values. 
